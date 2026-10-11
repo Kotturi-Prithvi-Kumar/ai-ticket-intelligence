@@ -75,6 +75,37 @@ Planned activities:
 3. Configure local PostgreSQL.
 4. Prepare the database migration approach.
 
+## Week 1 — Day 2: Backend Foundation
+
+**Status:** Implementation completed; final Git verification pending.
+
+### Completed
+- Created modular FastAPI backend structure.
+- Installed FastAPI and Uvicorn.
+- Implemented the `/health` endpoint.
+- Added centralized application configuration.
+- Configured Python application logging.
+- Installed pytest and HTTPX.
+- Implemented and passed the first automated health endpoint test.
+- Investigated and resolved module import and API response issues.
+
+### Technical Decisions
+- FastAPI for REST API development.
+- Uvicorn as the ASGI server.
+- Python's built-in logging for initial application logging.
+- pytest and FastAPI TestClient for automated API testing.
+- Modular directories for APIs, models, schemas, services, and core infrastructure.
+
+### Next Steps
+- Define ticket database models.
+- Configure PostgreSQL connectivity.
+- Introduce SQLAlchemy and database migrations.
+- Begin implementing ticket CRUD endpoints.
+
+### Known Considerations
+- Python 3.14.3 is being used; future ML dependencies require compatibility verification.
+- Production logging configuration and database connectivity are not yet implemented.
+
 ## Collaboration Rules
 
 - ChatGPT: Planning, explanations, architecture, and code review
@@ -89,4 +120,4 @@ None confirmed.
 
 ## Last Updated
 
-2026-10-10
+2026-10-11
