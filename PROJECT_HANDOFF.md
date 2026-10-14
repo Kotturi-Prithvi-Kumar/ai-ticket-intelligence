@@ -114,6 +114,35 @@ Planned activities:
 - Verify each step before proceeding
 - Update this file at the end of each development session
 
+## Week 1 — Day 3: Docker and PostgreSQL
+
+**Status:** Implementation complete; final verification and Git commit pending.
+
+### Completed
+- Verified Docker Engine and container execution.
+- Started PostgreSQL 17 using Docker Compose.
+- Configured persistent database storage.
+- Resolved Windows port binding issue by using localhost port 5433.
+- Integrated SQLAlchemy 2.x and psycopg 3 with FastAPI.
+- Implemented database session management.
+- Created the Ticket ORM model with seven columns.
+- Configured Alembic migrations.
+- Applied initial migration `6eac92b9d00d`.
+- Verified PostgreSQL table schema.
+- Confirmed `.env` is Git-ignored.
+
+### Architecture decisions
+- PostgreSQL is the primary relational database.
+- SQLAlchemy provides ORM and database connection management.
+- Alembic manages schema migrations.
+- Database credentials are loaded from environment variables.
+- FastAPI remains outside Docker during local development.
+
+### Next steps
+- Complete final tests and Git commit.
+- Implement ticket creation and retrieval endpoints.
+- Add Pydantic request and response schemas.
+- Add API integration tests.
 ## Current Blockers
 
 None confirmed.
