@@ -143,10 +143,33 @@ Planned activities:
 - Implement ticket creation and retrieval endpoints.
 - Add Pydantic request and response schemas.
 - Add API integration tests.
+
+## Week 1 — Day 4: Ticket CRUD API
+
+**Status:** Implementation and automated testing complete.
+
+### Implemented
+- Created Pydantic schemas for ticket creation, updates, and responses.
+- Implemented REST API endpoints for creating, listing, retrieving, updating, and deleting tickets.
+- Added pagination for ticket listing.
+- Added input validation and HTTP error handling.
+- Integrated FastAPI endpoints with PostgreSQL through SQLAlchemy.
+- Added database-backed integration tests using an isolated test database and transaction rollback.
+
+### Verification
+- Full backend test suite: **16 passed, 3 warnings**.
+- CRUD operations manually verified through Swagger UI.
+- Confirmed test database isolation and rollback behavior.
+- Three non-blocking dependency deprecation warnings remain.
+
+### Next Steps
+1. Review and commit the completed CRUD API.
+2. Begin Week 1 Day 5: API improvements and backend hardening.
+3. Continue toward ML dataset preparation and model development in subsequent milestones.
 ## Current Blockers
 
 None confirmed.
 
 ## Last Updated
 
-2026-10-11
+2026-10-15
