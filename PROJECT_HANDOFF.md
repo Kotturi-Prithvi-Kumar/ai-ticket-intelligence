@@ -166,10 +166,34 @@ Planned activities:
 1. Review and commit the completed CRUD API.
 2. Begin Week 1 Day 5: API improvements and backend hardening.
 3. Continue toward ML dataset preparation and model development in subsequent milestones.
+
+### Week 1 — Day 5: Ticket Validation and API Hardening
+
+**Status:** Implementation and testing completed.
+
+**Completed:**
+- Added whitespace validation and trimming for ticket subjects and descriptions.
+- Preserved restricted priority and status values using `Literal`.
+- Added 17 schema validation test cases.
+- Added 9 API validation integration test cases.
+- Verified that rejected PATCH requests preserve existing database records.
+- Confirmed 42 passing tests with 3 warnings.
+
+**Engineering decisions:**
+- Reused Pydantic validators instead of adding validation logic to individual API endpoints.
+- Retained PostgreSQL transaction isolation for integration tests.
+- Kept existing API contracts and database schema unchanged.
+
+**Follow-up:**
+- Review the three pytest warnings.
+- Review input-length boundaries and PATCH null handling.
+- Prepare the dataset and ML classification pipeline.
+
+**Latest verification:** `42 passed, 3 warnings in 1.82s`.
 ## Current Blockers
 
 None confirmed.
 
 ## Last Updated
 
-2026-10-15
+2026-10-16
