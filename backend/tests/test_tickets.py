@@ -4,6 +4,51 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.models.ticket import Ticket
+from unittest.mock import patch
+
+from sqlalchemy.exc import SQLAlchemyError
+
+def test_update_ticket_database_failure(
+    client: TestClient,
+    db_session: Session,
+) -> None:
+    """A failed update commit returns 500 and triggers rollback."""
+
+    created = client.post(
+        "/tickets",
+        json={
+            "subject": "Original subject",
+            "description": "Testing PATCH transaction rollback",
+        },
+    )
+
+    assert created.status_code == 201
+    ticket_id = created.json()["id"]
+
+    with (
+        patch.object(
+            db_session,
+            "commit",
+            side_effect=SQLAlchemyError("Simulated database failure"),
+        ) as mock_commit,
+        patch.object(
+            db_session,
+            "rollback",
+            wraps=db_session.rollback,
+        ) as mock_rollback,
+    ):
+        response = client.patch(
+            f"/tickets/{ticket_id}",
+            json={"subject": "Updated subject"},
+        )
+
+        assert response.status_code == 500
+        assert response.json() == {
+            "detail": "Unable to update ticket"
+        }
+
+        mock_commit.assert_called_once()
+        mock_rollback.assert_called_once()
 
 
 def test_create_ticket_success(client: TestClient) -> None:
@@ -264,3 +309,75 @@ def test_delete_ticket_not_found(client: TestClient) -> None:
         "detail": "Ticket not found"
     }
 
+def test_delete_ticket_database_failure(
+    client: TestClient,
+    db_session: Session,
+) -> None:
+    """Database commit failure returns 500 and triggers rollback."""
+
+    created = client.post(
+        "/tickets",
+        json={
+            "subject": "Rollback test",
+            "description": "Verify failed deletion handling",
+        },
+    )
+
+    assert created.status_code == 201
+    ticket_id = created.json()["id"]
+
+    with (
+        patch.object(
+            db_session,
+            "commit",
+            side_effect=SQLAlchemyError("Simulated database failure"),
+        ) as mock_commit,
+        patch.object(
+            db_session,
+            "rollback",
+            wraps=db_session.rollback,
+        ) as mock_rollback,
+    ):
+        response = client.delete(f"/tickets/{ticket_id}")
+
+        assert response.status_code == 500
+        assert response.json() == {
+            "detail": "Unable to delete ticket"
+        }
+
+        mock_commit.assert_called_once()
+        mock_rollback.assert_called_once()
+
+def test_create_ticket_database_failure(
+    client: TestClient,
+    db_session: Session,
+) -> None:
+    """A failed database commit returns 500 and triggers rollback."""
+
+    with (
+        patch.object(
+            db_session,
+            "commit",
+            side_effect=SQLAlchemyError("Simulated database failure"),
+        ) as mock_commit,
+        patch.object(
+            db_session,
+            "rollback",
+            wraps=db_session.rollback,
+        ) as mock_rollback,
+    ):
+        response = client.post(
+            "/tickets",
+            json={
+                "subject": "Database failure test",
+                "description": "Testing POST transaction rollback",
+            },
+        )
+
+        assert response.status_code == 500
+        assert response.json() == {
+            "detail": "Unable to create ticket"
+        }
+
+        mock_commit.assert_called_once()
+        mock_rollback.assert_called_once()

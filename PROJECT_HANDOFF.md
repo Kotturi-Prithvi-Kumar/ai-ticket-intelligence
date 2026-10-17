@@ -190,10 +190,38 @@ Planned activities:
 - Prepare the dataset and ML classification pipeline.
 
 **Latest verification:** `42 passed, 3 warnings in 1.82s`.
+
+### Week 1 — Day 6: API Reliability and Transaction Testing
+
+**Status:** Implementation and testing complete.
+
+**Completed:**
+- Reviewed existing ticket CRUD endpoints and DELETE implementation.
+- Verified HTTP 204, empty response body, and HTTP 404 deletion behavior.
+- Added simulated database commit-failure tests for POST, PATCH, and DELETE.
+- Verified HTTP 500 responses, safe error messages, and rollback invocation.
+- Confirmed PostgreSQL 17 Docker container is healthy.
+- Ran the complete regression suite: **45 passed, 3 warnings**.
+
+**Technical decisions:**
+- Retained hard deletion for the MVP.
+- Used `unittest.mock` to simulate SQLAlchemy commit failures.
+- Reused the existing isolated PostgreSQL test fixtures.
+- Avoided adding dependencies or modifying working production endpoints.
+
+**Known limitations:**
+- Commit-failure tests use mocks rather than real PostgreSQL outages.
+- Three existing test warnings remain to be investigated.
+- GET endpoint database-error handling has not been explicitly tested.
+
+**Next steps:**
+- Review API reliability and remaining test coverage.
+- Finalize Week 1 documentation.
+- Prepare for Week 2 ML data ingestion and preprocessing.
 ## Current Blockers
 
 None confirmed.
 
 ## Last Updated
 
-2026-10-16
+2026-10-17
